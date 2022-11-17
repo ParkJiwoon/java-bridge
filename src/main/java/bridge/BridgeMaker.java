@@ -2,6 +2,7 @@ package bridge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 다리의 길이를 입력 받아서 다리를 생성해주는 역할을 한다.
@@ -10,6 +11,7 @@ public class BridgeMaker {
 
     public static final int MIN_BRIDGE_SIZE = 3;
     public static final int MAX_BRIDGE_SIZE = 20;
+    private static final Map<Integer, String> bridgeSpace = Map.of(0, "D", 1, "U");
 
     private final BridgeNumberGenerator bridgeNumberGenerator;
 
@@ -24,19 +26,15 @@ public class BridgeMaker {
     public List<String> makeBridge(int size) {
         validateSize(size);
 
-        List<String> list = new ArrayList<>();
+        List<String> bridges = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             int number = bridgeNumberGenerator.generate();
-
-            if (number == 0) {
-                list.add("D");
-            } else {
-                list.add("U");
-            }
+            String space = bridgeSpace.get(number);
+            bridges.add(space);
         }
 
-        return list;
+        return bridges;
     }
 
     private void validateSize(int size) {
