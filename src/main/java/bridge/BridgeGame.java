@@ -25,6 +25,18 @@ public class BridgeGame {
         this.gameStatus = GameStatus.PLAYING;
     }
 
+    public BridgeStatus getBridgeStatus() {
+        return bridgeStatus;
+    }
+
+    public String getResult() {
+        if (gameStatus == GameStatus.SUCCESS) {
+            return "성공";
+        }
+
+        return "실패";
+    }
+
     public int getTryCount() {
         return tryCount;
     }

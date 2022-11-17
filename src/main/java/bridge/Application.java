@@ -1,6 +1,7 @@
 package bridge;
 
 import bridge.helper.InputView;
+import bridge.helper.OutputView;
 
 import java.util.List;
 
@@ -20,20 +21,16 @@ public class Application {
 
         while (bridgeGame.isPlaying()) {
             String userMoveSelect = inputView.readMoving();
-            bridgeGame.move(userMoveSelect);
+            BridgeStatus bridgeStatus = bridgeGame.move(userMoveSelect);
 
-            // TODO: 다리 출력
+            outputView.printMap(bridgeStatus);
 
-            // 실패한 경우 재시도 여부 검사
             if (bridgeGame.isFail()) {
                 String userRetrySelect = inputView.readGameCommand();
                 bridgeGame.retry(userRetrySelect);
             }
         }
 
-        System.out.println("최종 게임 결과");
-        // TODO: 다리 출력
-        System.out.println("게임 성공 여부: 성공");
-        System.out.println("총 시도한 횟수: " + bridgeGame.getTryCount());
+        outputView.printResult(bridgeGame);
     }
 }
