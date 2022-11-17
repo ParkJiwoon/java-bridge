@@ -2,6 +2,8 @@ package bridge;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.List;
+
 public class Application {
 
     public static void main(String[] args) {
@@ -10,11 +12,14 @@ public class Application {
         // 1. Input: 다리의 길이를 입력해주세요. (3 ~ 20)
         System.out.println("다리의 길이를 입력해주세요.");
         int bridgeLength = Integer.parseInt(Console.readLine());
+
+        BridgeRandomNumberGenerator generator = new BridgeRandomNumberGenerator();
+        BridgeMaker bridgeMaker = new BridgeMaker(generator);
+        List<String> bridges = bridgeMaker.makeBridge(bridgeLength);
+
+        // TODO: BridgeGame 생성
         int tryCount = 0;
         int currentPosition = 1;
-
-        // TODO: bridgeLength 로 다리 생성
-        // TODO: BridgeGame 생성
 
         while (currentPosition < bridgeLength) {
             System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)");
