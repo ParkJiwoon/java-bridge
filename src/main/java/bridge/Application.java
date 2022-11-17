@@ -11,6 +11,7 @@ public class Application {
             InputValidator inputValidator = new InputValidator();
             InputView inputView = new InputView(inputValidator);
             OutputView outputView = new OutputView();
+
             BridgeGameController bridgeGameController = new BridgeGameController(inputView, outputView);
             bridgeGameController.gamePlay();
         } catch (IllegalArgumentException e) {
