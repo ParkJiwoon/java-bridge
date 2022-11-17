@@ -7,6 +7,7 @@ import java.util.List;
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
+    public static final int INIT_TRY_COUNT = 1;
     private final List<String> bridges;
     private BridgeStatus bridgeStatus;
     private GameStatus gameStatus;
@@ -15,7 +16,7 @@ public class BridgeGame {
 
     public BridgeGame(List<String> bridges) {
         this.bridges = new ArrayList<>(bridges);
-        init(0);
+        init(INIT_TRY_COUNT);
     }
 
     public void init(int tryCount) {
@@ -30,11 +31,7 @@ public class BridgeGame {
     }
 
     public String getResult() {
-        if (gameStatus == GameStatus.SUCCESS) {
-            return "성공";
-        }
-
-        return "실패";
+        return gameStatus.getKorean();
     }
 
     public int getTryCount() {
@@ -63,16 +60,23 @@ public class BridgeGame {
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public BridgeStatus move(String userMoveSelect) {
-        incrementCurrentPosition();
-
         Move move = Move.valueOfSelect(userMoveSelect);
         String nextSpace = bridges.get(currentPosition);
 
         if (nextSpace.equals(userMoveSelect)) {
-            bridgeStatus.moveSuccess(move);
-            return bridgeStatus;
+            return moveSuccess(move);
         }
 
+        return moveFail(move);
+    }
+
+    private BridgeStatus moveSuccess(Move move) {
+        incrementCurrentPosition();
+        bridgeStatus.moveSuccess(move);
+        return bridgeStatus;
+    }
+
+    private BridgeStatus moveFail(Move move) {
         gameStatus = GameStatus.FAIL;
         bridgeStatus.moveFail(move);
         return bridgeStatus;
